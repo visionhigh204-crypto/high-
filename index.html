@@ -1,367 +1,1035 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muharram Noha Player - Azadari Companion</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-dark: #121212;
-            --card-dark: #1e1e1e;
-            --accent-crimson: #8b0000;
-            --accent-bright-red: #d32f2f;
-            --text-main: #e0e0e0;
-            --text-muted: #a0a0a0;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>محرم الحرام — شیعہ اسلام</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  :root {
+    --black: #0a0a0a;
+    --deep: #1a0a00;
+    --gold: #c8963e;
+    --gold-light: #e8b96a;
+    --gold-pale: #f5e6c8;
+    --red-dark: #7a1a1a;
+    --red: #9b2626;
+    --red-muted: #c0392b33;
+    --green-dark: #0d3320;
+    --green: #1a5e38;
+    --bg: #0f0800;
+    --bg2: #180d00;
+    --bg3: #1e1200;
+    --surface: #251500;
+    --surface2: #2e1a00;
+    --border: #3d2200;
+    --text: #f0ddb0;
+    --text-muted: #a88a60;
+    --text-dim: #6b5530;
+    --arabic-font: 'Noto Naskh Arabic', 'Traditional Arabic', serif;
+    --urdu-font: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .player-container {
-            background-color: var(--card-dark);
-            width: 100%;
-            max-width: 420px;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            border-top: 4px solid var(--accent-crimson);
-        }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--urdu-font);
+    font-size: 18px;
+    line-height: 2;
+    direction: rtl;
+    min-height: 100vh;
+  }
 
-        .app-header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(180deg, #000 0%, var(--bg2) 100%);
+    border-bottom: 1px solid var(--gold);
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,150,62,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-crescent {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 12px rgba(200,150,62,0.5));
+  }
+  header h1 {
+    font-family: var(--arabic-font);
+    font-size: 2.8rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+  }
+  header .subtitle-ur {
+    font-family: var(--urdu-font);
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+  header .byline {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.75rem;
+    font-family: 'Georgia', serif;
+    direction: ltr;
+    letter-spacing: 0.06em;
+  }
 
-        .app-header h1 {
-            font-size: 1.6rem;
-            color: var(--accent-bright-red);
-            letter-spacing: 1px;
-        }
+  /* ── NAV ── */
+  nav {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-family: var(--urdu-font);
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.2s;
+    background: var(--surface);
+  }
+  nav a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: var(--surface2);
+  }
 
-        .app-header .subtitle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
 
-        .now-playing-card {
-            text-align: center;
-            margin-bottom: 24px;
-        }
+  /* ── SECTION ── */
+  section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 70px;
+  }
+  section h2 {
+    font-family: var(--arabic-font);
+    font-size: 1.8rem;
+    color: var(--gold);
+    border-right: 4px solid var(--gold);
+    padding-right: 1rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+  }
+  section h2.urdu-heading {
+    font-family: var(--urdu-font);
+    font-size: 1.6rem;
+  }
+  section .section-subtitle {
+    font-family: var(--urdu-font);
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    padding-right: 1.4rem;
+  }
 
-        .art-placeholder {
-            width: 140px;
-            height: 140px;
-            background: linear-gradient(145deg, #151515, #252525);
-            margin: 0 auto 16px auto;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid var(--accent-crimson);
-        }
+  /* ── TTS BAR ── */
+  .tts-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    direction: ltr;
+  }
+  .tts-bar label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-family: 'Georgia', serif;
+    white-space: nowrap;
+  }
+  .tts-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--gold-light);
+    font-family: 'Georgia', serif;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tts-btn:hover { border-color: var(--gold); background: #3a2200; }
+  .tts-btn.active { background: var(--red-dark); border-color: var(--red); color: #ffd0d0; }
+  .tts-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .tts-speed {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: auto;
+  }
+  .tts-speed input[type=range] {
+    width: 70px;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+  .tts-speed span {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    min-width: 28px;
+    font-family: 'Georgia', serif;
+  }
 
-        .art-placeholder i {
-            font-size: 3rem;
-            color: var(--accent-bright-red);
-        }
+  /* ── CONTENT BLOCKS ── */
+  .arabic-block {
+    font-family: var(--arabic-font);
+    font-size: 1.35rem;
+    line-height: 2.4;
+    color: var(--gold-pale);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-right: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    direction: rtl;
+  }
+  .urdu-block {
+    font-family: var(--urdu-font);
+    font-size: 1.15rem;
+    line-height: 2.4;
+    color: var(--text);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-right: 3px solid var(--red);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    direction: rtl;
+  }
 
-        #track-title {
-            font-size: 1.25rem;
-            margin-bottom: 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    margin: 2rem 0;
+    opacity: 0.4;
+    letter-spacing: 1rem;
+    font-family: var(--arabic-font);
+  }
 
-        #track-artist {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
+  /* ── HADITH BOX ── */
+  .hadith-box {
+    background: var(--green-dark);
+    border: 1px solid var(--green);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .hadith-box .hadith-label {
+    font-family: 'Georgia', serif;
+    font-size: 0.7rem;
+    color: #4caf7d;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    direction: ltr;
+    margin-bottom: 0.5rem;
+  }
+  .hadith-box p {
+    font-family: var(--arabic-font);
+    font-size: 1.2rem;
+    color: #a8e6c2;
+    line-height: 2.2;
+    margin-bottom: 0.5rem;
+  }
+  .hadith-box .hadith-ur {
+    font-family: var(--urdu-font);
+    font-size: 1rem;
+    color: #78c9a0;
+    line-height: 2.2;
+  }
+  .hadith-box .hadith-source {
+    font-family: 'Georgia', serif;
+    font-size: 0.75rem;
+    color: #4caf7d;
+    direction: ltr;
+    margin-top: 0.5rem;
+  }
 
-        .progress-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            gap: 10px;
-        }
+  /* ── TIMELINE ── */
+  .timeline {
+    list-style: none;
+    position: relative;
+    padding-right: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 0.6rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), var(--red-dark));
+  }
+  .timeline li {
+    position: relative;
+    margin-bottom: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+  }
+  .timeline li::before {
+    content: attr(data-day);
+    position: absolute;
+    right: -2.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Georgia', serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    line-height: 1.1;
+  }
+  .timeline li .day-arabic {
+    font-family: var(--arabic-font);
+    font-size: 1.15rem;
+    color: var(--gold-light);
+    margin-bottom: 0.3rem;
+  }
+  .timeline li .day-urdu {
+    font-family: var(--urdu-font);
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
 
-        #progress-bar {
-            flex-grow: 1;
-            accent-color: var(--accent-bright-red);
-            cursor: pointer;
-            height: 5px;
-        }
+  /* ── AMAAL TABLE ── */
+  .amaal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .amaal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .amaal-card .amaal-num {
+    font-family: 'Georgia', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    direction: ltr;
+    margin-bottom: 0.3rem;
+  }
+  .amaal-card .amaal-title-ar {
+    font-family: var(--arabic-font);
+    font-size: 1.1rem;
+    color: var(--gold-pale);
+    margin-bottom: 0.2rem;
+  }
+  .amaal-card .amaal-title-ur {
+    font-family: var(--urdu-font);
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
 
-        .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 24px;
-            margin-bottom: 28px;
-        }
+  /* ── DUA BLOCK ── */
+  .dua-block {
+    background: #0a1a10;
+    border: 1px solid #1a4a2a;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    text-align: center;
+  }
+  .dua-block .dua-arabic {
+    font-family: var(--arabic-font);
+    font-size: 1.5rem;
+    color: #7ee8a2;
+    line-height: 2.5;
+    margin-bottom: 0.75rem;
+  }
+  .dua-block .dua-urdu {
+    font-family: var(--urdu-font);
+    font-size: 1rem;
+    color: #a8d8b8;
+    line-height: 2.2;
+  }
 
-        .ctrl-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
+  /* ── MAQTAL BANNER ── */
+  .maqtal-banner {
+    background: linear-gradient(135deg, #1a0000, #2a0808);
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  .maqtal-banner .banner-arabic {
+    font-family: var(--arabic-font);
+    font-size: 1.4rem;
+    color: #ff9999;
+    line-height: 2.2;
+    margin-bottom: 0.5rem;
+  }
+  .maqtal-banner .banner-urdu {
+    font-family: var(--urdu-font);
+    font-size: 1rem;
+    color: #cc8080;
+    line-height: 2;
+  }
 
-        .ctrl-btn:hover {
-            color: var(--accent-bright-red);
-        }
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-family: 'Georgia', serif;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    direction: ltr;
+    letter-spacing: 0.05em;
+  }
+  footer .footer-arabic {
+    font-family: var(--arabic-font);
+    font-size: 1.2rem;
+    color: var(--gold);
+    direction: rtl;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
 
-        .play-main {
-            background-color: var(--accent-crimson);
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.4);
-        }
+  /* ── GLOBAL TTS CONTROLS ── */
+  #global-tts {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    background: var(--surface2);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    z-index: 200;
+    direction: ltr;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  }
+  #global-tts button {
+    background: none;
+    border: none;
+    color: var(--gold-light);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0.1rem 0.3rem;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  #global-tts button:hover { color: var(--gold); }
+  #global-tts .g-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-family: 'Georgia', serif;
+  }
 
-        .play-main:hover {
-            background-color: var(--accent-bright-red);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .playlist-section h3 {
-            font-size: 1rem;
-            margin-bottom: 12px;
-            color: var(--text-muted);
-            border-bottom: 1px solid #333;
-            padding-bottom: 6px;
-        }
-
-        #playlist {
-            list-style: none;
-            max-height: 180px;
-            overflow-y: auto;
-        }
-
-        #playlist li {
-            padding: 10px 12px;
-            border-radius: 6px;
-            margin-bottom: 6px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #262626;
-            transition: background 0.2s;
-            font-size: 0.9rem;
-        }
-
-        #playlist li:hover {
-            background-color: #333;
-        }
-
-        #playlist li.active {
-            background-color: rgba(139, 0, 0, 0.2);
-            border-left: 3px solid var(--accent-bright-red);
-        }
-
-        #playlist li .reciter {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-    </style>
+  @media (max-width: 600px) {
+    header h1 { font-size: 2rem; }
+    .amaal-grid { grid-template-columns: 1fr; }
+    .arabic-block, .urdu-block { font-size: 1.1rem; }
+    #global-tts { bottom: 1rem; left: 1rem; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="player-container">
-        <header class="app-header">
-            <h1>Ya Hussain (a.s)</h1>
-            <p class="subtitle">Muharram Azadari Player</p>
-        </header>
+<!-- ══ HEADER ══ -->
+<header>
+  <span class="header-crescent">☽</span>
+  <h1>مُحَرَّمُ الْحَرَامْ</h1>
+  <div class="subtitle-ur">شیعہ اسلام کی روشنی میں — محرم کا مکمل بیان</div>
+  <div class="byline">A scholarly Shia Islamic reference · Arabic &amp; Urdu · Approved in the tradition of Ahl al-Bayt (عليهم السلام)</div>
+</header>
 
-        <div class="now-playing-card">
-            <div class="art-placeholder">
-                <i class="fa-solid fa-flag"></i>
-            </div>
-            <h2 id="track-title">Select a Noha</h2>
-            <h3 id="track-artist">Reciter Name</h3>
-        </div>
+<!-- ══ NAVIGATION ══ -->
+<nav>
+  <a href="#sec-intro">تعارف</a>
+  <a href="#sec-fazeelat">فضیلت</a>
+  <a href="#sec-karbala">واقعۂ کربلا</a>
+  <a href="#sec-timeline">روز بروز</a>
+  <a href="#sec-amaal">اعمال</a>
+  <a href="#sec-ziyarat">زیارت</a>
+  <a href="#sec-duas">دعائیں</a>
+  <a href="#sec-aqeedah">عقیدہ</a>
+  <a href="#sec-nawha">نوحہ</a>
+</nav>
 
-        <audio id="audio-player" src=""></audio>
+<!-- ══ MAIN ══ -->
+<main>
 
-        <div class="progress-container">
-            <span id="current-time">0:00</span>
-            <input type="range" id="progress-bar" value="0" max="100">
-            <span id="total-duration">0:00</span>
-        </div>
+  <!-- ── SECTION 1: INTRO ── -->
+  <section id="sec-intro">
+    <h2>بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</h2>
+    <div class="section-subtitle">شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے</div>
 
-        <div class="controls">
-            <button id="btn-prev" class="ctrl-btn" title="Previous"><i class="fa-solid fa-backward-step"></i></button>
-            <button id="btn-play" class="ctrl-btn play-main" title="Play/Pause"><i class="fa-solid fa-play"></i></button>
-            <button id="btn-next" class="ctrl-btn" title="Next"><i class="fa-solid fa-forward-step"></i></button>
-        </div>
-
-        <div class="playlist-section">
-            <h3>Noha Queue</h3>
-            <ul id="playlist"></ul>
-        </div>
+    <div class="tts-bar" data-section="intro">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="بسم الله الرحمن الرحيم. المحرم هو أول أشهر السنة الهجرية، وهو من الأشهر الحرم التي عظّمها الله سبحانه وتعالى. وفي هذا الشهر المبارك يحيي المؤمنون من أهل بيت النبي صلى الله عليه وآله ذكرى شهادة سيد الشهداء الإمام الحسين بن علي عليه السلام وأصحابه الكرام في واقعة كربلاء المقدسة.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="بسم اللہ الرحمن الرحیم۔ محرم الحرام اسلامی سال کا پہلا مہینہ ہے۔ یہ ان چار مہینوں میں سے ایک ہے جنہیں اللہ تعالیٰ نے حرمت دی ہے۔ اس مقدس مہینے میں مومنین اہل بیت نبوی کی یاد میں سیدالشہداء امام حسین علیہ السلام اور ان کے باوفا ساتھیوں کی شہادت کا غم مناتے ہیں جو کربلائے معلیٰ میں واقع ہوئی۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
     </div>
 
-    <script>
-        // Sample tracks data list - update the URLs with your audio files
-        const nohaList = [
-            {
-                title: "Noha 1 Title Sample",
-                artist: "Nadeem Sarwar",
-                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-            },
-            {
-                title: "Noha 2 Title Sample",
-                artist: "Mir Hasan Mir",
-                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-            },
-            {
-                title: "Noha 3 Title Sample",
-                artist: "Ali Shanawar",
-                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-            }
-        ];
+    <div class="arabic-block">
+      بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ. اَلْمُحَرَّمُ هُوَ أَوَّلُ أَشْهُرِ السَّنَةِ الْهِجْرِيَّةِ، وَهُوَ مِنَ الْأَشْهُرِ الْحُرُمِ الَّتِي عَظَّمَهَا اللهُ سُبْحَانَهُ وَتَعَالَى. وَفِي هَذَا الشَّهْرِ الْمُبَارَكِ يُحْيِي الْمُؤْمِنُونَ مِنْ أَهْلِ بَيْتِ النَّبِيِّ ﷺ ذِكْرَى شَهَادَةِ سَيِّدِ الشُّهَدَاءِ الْإِمَامِ الْحُسَيْنِ بْنِ عَلِيٍّ عَلَيْهِ السَّلَامُ وَأَصْحَابِهِ الْكِرَامِ فِي وَاقِعَةِ كَرْبَلَاءَ الْمُقَدَّسَةِ.
+    </div>
+    <div class="urdu-block">
+      محرم الحرام اسلامی سال کا پہلا مہینہ ہے۔ یہ ان چار مہینوں میں سے ایک ہے جنہیں اللہ تعالیٰ نے حرمت بخشی ہے — جن میں لڑائی جھگڑا حرام قرار دیا گیا تھا۔ اس مقدس مہینے میں مومنین اہل بیتِ نبوی علیہم السلام کی عزاداری کرتے ہیں اور سیدالشہداء امام حسین بن علی علیہ السلام اور ان کے باوفا اصحاب کی شہادتِ عظمیٰ کی یاد مناتے ہیں جو کربلائے معلیٰ میں دس محرم الحرام سنہ ۶۱ ہجری کو پیش آئی۔
+    </div>
+  </section>
 
-        let currentTrackIndex = 0;
-        let isPlaying = false;
+  <div class="divider">۞ ۞ ۞</div>
 
-        const audio = document.getElementById('audio-player');
-        const playBtn = document.getElementById('btn-play');
-        const prevBtn = document.getElementById('btn-prev');
-        const nextBtn = document.getElementById('btn-next');
-        const progressBar = document.getElementById('progress-bar');
-        const currentTimeEl = document.getElementById('current-time');
-        const durationTimeEl = document.getElementById('total-duration');
-        const trackTitle = document.getElementById('track-title');
-        const trackArtist = document.getElementById('track-artist');
-        const playlistContainer = document.getElementById('playlist');
+  <!-- ── SECTION 2: FAZEELAT ── -->
+  <section id="sec-fazeelat">
+    <h2>فَضِيلَةُ الْمُحَرَّمِ</h2>
+    <div class="section-subtitle">محرم کی فضیلت — قرآن و حدیث کی روشنی میں</div>
 
-        function initPlayer() {
-            buildPlaylistUI();
-            loadTrack(currentTrackIndex);
-        }
+    <div class="tts-bar">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="قال الله تعالى في كتابه الكريم: إِنَّ عِدَّةَ الشُّهُورِ عِنْدَ اللَّهِ اثْنَا عَشَرَ شَهْرًا فِي كِتَابِ اللَّهِ يَوْمَ خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ مِنْهَا أَرْبَعَةٌ حُرُمٌ. المحرم هو أشرف الأشهر الحرم وأفضلها بعد شهر رمضان المبارك. وقد روي عن النبي صلى الله عليه وآله أنه قال: أفضل الصيام بعد رمضان شهر الله المحرم.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="اللہ تعالیٰ نے قرآن کریم میں فرمایا: بے شک مہینوں کی گنتی اللہ کے نزدیک بارہ مہینے ہیں اللہ کی کتاب میں جس دن سے اس نے آسمانوں اور زمین کو پیدا کیا، ان میں سے چار حرمت والے ہیں۔ محرم الحرام ان چار مہینوں میں سب سے زیادہ قابل احترام ہے اور رمضان المبارک کے بعد سب سے افضل مہینہ ہے۔ نبی کریم صلی اللہ علیہ وآلہ وسلم نے فرمایا: رمضان کے بعد سب سے افضل روزہ اللہ کے مہینے محرم کا روزہ ہے۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
+    </div>
 
-        function buildPlaylistUI() {
-            playlistContainer.innerHTML = '';
-            nohaList.forEach((noha, index) => {
-                const li = document.createElement('li');
-                li.dataset.index = index;
-                if(index === currentTrackIndex) li.classList.add('active');
-                
-                li.innerHTML = `
-                    <span>${noha.title}</span>
-                    <span class="reciter">${noha.artist}</span>
-                `;
-                
-                li.addEventListener('click', () => {
-                    currentTrackIndex = index;
-                    loadTrack(currentTrackIndex);
-                    playTrack();
-                });
-                playlistContainer.appendChild(li);
-            });
-        }
+    <div class="hadith-box">
+      <div class="hadith-label">📖 Quran — Surah At-Tawbah 9:36</div>
+      <p>﴿ إِنَّ عِدَّةَ الشُّهُورِ عِنْدَ اللَّهِ اثْنَا عَشَرَ شَهْرًا فِي كِتَابِ اللَّهِ يَوْمَ خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ مِنْهَا أَرْبَعَةٌ حُرُمٌ ۚ ذَٰلِكَ الدِّينُ الْقَيِّمُ ﴾</p>
+      <div class="hadith-ur">بے شک مہینوں کی گنتی اللہ کے نزدیک بارہ مہینے ہیں — اس دن سے جب اس نے آسمانوں اور زمین کو پیدا کیا — ان میں سے چار حرمت والے ہیں۔ یہی سیدھا دین ہے۔</div>
+    </div>
 
-        function loadTrack(index) {
-            audio.src = nohaList[index].url;
-            trackTitle.innerText = nohaList[index].title;
-            trackArtist.innerText = nohaList[index].artist;
-            
-            const trackItems = playlistContainer.querySelectorAll('li');
-            trackItems.forEach(item => item.classList.remove('active'));
-            if(trackItems[index]) trackItems[index].classList.add('active');
+    <div class="arabic-block">
+      اَلْمُحَرَّمُ هُوَ أَشْرَفُ الْأَشْهُرِ الْحُرُمِ وَأَفْضَلُهَا بَعْدَ شَهْرِ رَمَضَانَ الْمُبَارَكِ. وَقَدْ رُوِيَ عَنِ النَّبِيِّ الْأَكْرَمِ ﷺ أَنَّهُ قَالَ: «أَفْضَلُ الصِّيَامِ بَعْدَ رَمَضَانَ شَهْرُ اللهِ الْمُحَرَّمُ». وَمِنَ الثَّابِتِ فِي التَّارِيخِ أَنَّ اللهَ عَزَّ وَجَلَّ أَنْجَى فِيهِ أَنْبِيَاءَهُ الْكِرَامَ، وَفِيهِ نَجَا مُوسَى عَلَيْهِ السَّلَامُ مِنَ الْفِرْعَوْنِ.
+    </div>
+    <div class="urdu-block">
+      محرم الحرام چار حرمت والے مہینوں میں سب سے برتر اور رمضان المبارک کے بعد سب سے افضل مہینہ ہے۔ تاریخ میں یہ ثابت ہے کہ اللہ عزوجل نے اس مہینے میں اپنے انبیاء کرام کو نجات دی۔ اسی مہینے میں حضرت موسیٰ علیہ السلام فرعون کے ظلم سے نجات پائے۔ شیعہ مذہب میں محرم کی خاص اہمیت سیدالشہداء امام حسین علیہ السلام کی شہادت کی وجہ سے ہے — جو قیامت تک مظلوموں کی علامت بن گئے۔
+    </div>
+  </section>
 
-            progressBar.value = 0;
-        }
+  <div class="divider">۞ ۞ ۞</div>
 
-        function playTrack() {
-            isPlaying = true;
-            audio.play().catch(err => console.log("Playback interaction flag checked: ", err));
-            playBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
-        }
+  <!-- ── SECTION 3: KARBALA ── -->
+  <section id="sec-karbala">
+    <h2>وَاقِعَةُ كَرْبَلَاء</h2>
+    <div class="section-subtitle">واقعۂ کربلا — المناک اور ابدی داستان</div>
 
-        function pauseTrack() {
-            isPlaying = false;
-            audio.pause();
-            playBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
-        }
+    <div class="tts-bar">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="في عام إحدى وستين من الهجرة النبوية الشريفة، خرج الإمام الحسين بن علي بن أبي طالب، سبط رسول الله وريحانته، من مكة المكرمة متوجهاً إلى الكوفة استجابةً لنداء أهلها الذين طلبوا منه أن يكون إمامهم وقائدهم. وفي أرض كربلاء المقدسة على ضفاف نهر الفرات، أحاط به جيش يزيد بن معاوية الطاغية وعدده يزيد على ثلاثين ألفاً، في حين كان مع الإمام الحسين اثنان وسبعون رجلاً من أهل بيته وأصحابه الأوفياء. ومنعوا عنه الماء ثلاثة أيام. فاختار الإمام الحسين عليه السلام الشهادة على الذل والاستسلام للظلم قائلاً كلمته الخالدة: هيهات منا الذلة.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="سنہ اکسٹھ ہجری میں امام حسین بن علی علیہ السلام — جو رسول اللہ صلی اللہ علیہ وآلہ وسلم کے نواسے اور جنت کے جوانوں کے سردار تھے — مکہ مکرمہ سے کوفہ کی طرف روانہ ہوئے کیونکہ کوفہ والوں نے انہیں اپنا امام اور قائد بننے کی دعوت دی تھی۔ کربلائے معلیٰ کی سرزمین پر دریائے فرات کے کنارے یزید بن معاویہ کی تیس ہزار سے زائد فوج نے انہیں گھیر لیا۔ امام علیہ السلام کے ساتھ صرف بہتر جان نثار تھے۔ دشمن نے تین دن تک پانی بند رکھا۔ امام حسین علیہ السلام نے ذلت پر شہادت کو ترجیح دی اور فرمایا: ہیہات منا الذلۃ — ہم سے ذلت بہت دور ہے۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
+    </div>
 
-        playBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                pauseTrack();
-            } else {
-                playTrack();
-            }
-        });
+    <div class="maqtal-banner">
+      <div class="banner-arabic">
+        «هَيْهَاتَ مِنَّا الذِّلَّةُ! أَبَى اللهُ لَنَا ذَلِكَ وَرَسُولُهُ وَالْمُؤْمِنُونَ»
+      </div>
+      <div class="banner-urdu">ہم سے ذلت بہت دور ہے! اللہ، اس کے رسول اور مومنین نے اس سے انکار کیا ہے — امام حسین علیہ السلام، کربلا ۶۱ ہجری</div>
+    </div>
 
-        prevBtn.addEventListener('click', () => {
-            currentTrackIndex = (currentTrackIndex - 1 + nohaList.length) % nohaList.length;
-            loadTrack(currentTrackIndex);
-            if (isPlaying) playTrack();
-        });
+    <div class="arabic-block">
+      فِي عَامِ إِحْدَى وَسِتِّينَ مِنَ الْهِجْرَةِ النَّبَوِيَّةِ الشَّرِيفَةِ، خَرَجَ الْإِمَامُ الْحُسَيْنُ بْنُ عَلِيٍّ عَلَيْهِ السَّلَامُ — سِبْطُ رَسُولِ اللهِ ﷺ وَرَيْحَانَتُهُ وَسَيِّدُ شَبَابِ أَهْلِ الْجَنَّةِ — مِنْ مَكَّةَ الْمُكَرَّمَةِ مُتَوَجِّهًا نَحْوَ الْكُوفَةِ. وَفِي أَرْضِ كَرْبَلَاءَ الْمُقَدَّسَةِ عَلَى ضِفَافِ نَهْرِ الْفُرَاتِ أَحَاطَ بِهِ جَيْشُ يَزِيدَ بْنِ مُعَاوِيَةَ الطَّاغِيَةِ وَعَدَدُهُ يَزِيدُ عَلَى ثَلَاثِينَ أَلْفًا. وَحُرِمَ الْإِمَامُ وَأَهْلُهُ وَأَصْحَابُهُ مِنَ الْمَاءِ ثَلَاثَةَ أَيَّامٍ. فَاخْتَارَ عَلَيْهِ السَّلَامُ الشَّهَادَةَ عِزًّا عَلَى الذُّلِّ وَالِاسْتِسْلَامِ لِلظُّلْمِ، مُؤَثِّرًا كَرَامَةَ الدِّينِ عَلَى حَيَاةِ الدُّنْيَا.
+    </div>
+    <div class="urdu-block">
+      سنہ اکسٹھ ہجری میں امام حسین بن علی علیہ السلام — جو رسول اللہ صلی اللہ علیہ وآلہ وسلم کے نواسے، ان کے دل کا چین اور جنت کے جوانوں کے سردار تھے — مکہ مکرمہ سے روانہ ہوئے۔ کوفیوں کی اٹھارہ ہزار چٹھیوں نے انہیں اپنا قائد بننے کی دعوت دی تھی مگر جب امام قریب پہنچے تو کوفیوں نے دھوکا دیا اور دشمن کا ساتھ دیا۔ کربلائے معلیٰ کی تپتی ریت پر تین دن پانی بند رہا۔ بچے پیاسے تھے، خواتین بے بس تھیں مگر امام ثابت قدم رہے۔ عاشورا کے دن — دس محرم — وہ شہادت کی آغوش میں چلے گئے اور اسلام کو ہمیشہ کے لیے زندہ کر گئے۔
+    </div>
 
-        nextBtn.addEventListener('click', () => {
-            currentTrackIndex = (currentTrackIndex + 1) % nohaList.length;
-            loadTrack(currentTrackIndex);
-            if (isPlaying) playTrack();
-        });
+    <div class="hadith-box">
+      <div class="hadith-label">📜 حدیث نبوی — بحار الانوار</div>
+      <p>«حُسَيْنٌ مِنِّي وَأَنَا مِنْ حُسَيْنٍ، أَحَبَّ اللهُ مَنْ أَحَبَّ حُسَيْنًا»</p>
+      <div class="hadith-ur">حسین مجھ سے ہے اور میں حسین سے ہوں۔ اللہ اس سے محبت کرے جو حسین سے محبت کرے۔</div>
+      <div class="hadith-source">— رسول اللہ ﷺ | بحار الانوار، جلد ۴۳</div>
+    </div>
+  </section>
 
-        audio.addEventListener('timeupdate', () => {
-            if (audio.duration) {
-                const progressPercent = (audio.currentTime / audio.duration) * 100;
-                progressBar.value = progressPercent;
-                
-                currentTimeEl.innerText = formatTime(audio.currentTime);
-                durationTimeEl.innerText = formatTime(audio.duration);
-            }
-        });
+  <div class="divider">۞ ۞ ۞</div>
 
-        progressBar.addEventListener('input', () => {
-            const targetTime = (progressBar.value / 100) * audio.duration;
-            audio.currentTime = targetTime;
-        });
+  <!-- ── SECTION 4: TIMELINE ── -->
+  <section id="sec-timeline">
+    <h2 class="urdu-heading">روز بروز واقعات — محرم کا کیلنڈر</h2>
+    <div class="section-subtitle">یکم محرم سے بیسویں محرم تک کے اہم واقعات</div>
 
-        audio.addEventListener('ended', () => {
-            currentTrackIndex = (currentTrackIndex + 1) % nohaList.length;
-            loadTrack(currentTrackIndex);
-            playTrack();
-        });
+    <div class="tts-bar">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="في الأول من المحرم: خروج الإمام الحسين من مكة المكرمة. في الثاني من المحرم: وصول قافلة الإمام إلى أرض كربلاء. في السابع: حصار الماء على معسكر الإمام. في التاسع: ليلة عاشوراء المقدسة. في العاشر: يوم عاشوراء ذكرى الشهادة الكبرى. في الحادي عشر: سبي أهل البيت. في العشرين: يوم الأربعين ذكرى أربعين الإمام الحسين.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="یکم محرم کو امام حسین علیہ السلام مکہ مکرمہ سے روانہ ہوئے۔ دو محرم کو کربلا پہنچے۔ سات محرم کو پانی بند ہوا۔ نو محرم کو شب عاشورا، رات بھر عبادت اور آخری وداع۔ دس محرم یوم عاشورا — شہادتِ عظمیٰ۔ گیارہ محرم کو اہل بیت کو قیدی بنایا گیا۔ بیس محرم اربعین امام حسین علیہ السلام۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
+    </div>
 
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
+    <ul class="timeline">
+      <li data-day="1">
+        <div class="day-arabic">يَوْمُ الْأَوَّلِ — یکم محرم</div>
+        <div class="day-urdu">امام حسین علیہ السلام مکہ مکرمہ سے روانہ ہوئے۔ خانۂ کعبہ کا طواف کیا اور الوداع کہا۔ کوفیوں کے مطالبے پر عازمِ سفر ہوئے۔</div>
+      </li>
+      <li data-day="2">
+        <div class="day-arabic">يَوْمُ الثَّانِي — دو محرم</div>
+        <div class="day-urdu">قافلۂ امام کربلائے معلیٰ پہنچا — وہ سرزمین جو تکلیف اور مصیبت کی جگہ تھی۔ خیمے نصب کیے گئے۔ فرات کے کنارے پڑاؤ ہوا۔</div>
+      </li>
+      <li data-day="7">
+        <div class="day-arabic">يَوْمُ السَّابِعِ — سات محرم</div>
+        <div class="day-urdu">دشمن نے پانی بند کر دیا۔ علی اکبر، علی اصغر، قاسم، اور دیگر بچوں و خواتین پر پانی حرام کر دیا گیا۔ پیاس کی تکلیف شروع ہوئی۔</div>
+      </li>
+      <li data-day="9">
+        <div class="day-arabic">يَوْمُ التَّاسِعِ — نو محرم — شبِ عاشورا</div>
+        <div class="day-urdu">امام نے رات کی مہلت مانگی۔ ساری رات عبادت، تلاوت، اور آخری وداع۔ امام نے اصحاب کو آزادی دی مگر سب نے شہادت کو ترجیح دی۔</div>
+      </li>
+      <li data-day="10">
+        <div class="day-arabic">يَوْمُ الْعَاشِرِ — دسویں محرم — يَوْمُ عَاشُورَاء</div>
+        <div class="day-urdu">یوم عاشورا — شہادتِ عظمیٰ کا دن۔ نماز صبح کے بعد جنگ شروع ہوئی۔ ایک ایک کر کے تمام اصحاب اور اہل بیت شہید ہوئے۔ عصر کے وقت امام حسین علیہ السلام نے شہادت پائی — اِنَّا لِلهِ وَاِنَّا اِلَيْهِ رَاجِعُونَ۔</div>
+      </li>
+      <li data-day="11">
+        <div class="day-arabic">يَوْمُ الْحَادِي عَشَرَ — گیارہ محرم</div>
+        <div class="day-urdu">اہل بیت کو قیدی بنایا گیا۔ خیمے جلائے گئے۔ حضرت زینب سلام اللہ علیہا نے بچوں کی حفاظت کی۔ کربلا سے کوفہ کی طرف روانہ ہوئے۔</div>
+      </li>
+      <li data-day="20">
+        <div class="day-arabic">يَوْمُ الْعِشْرِينَ — بیس محرم — يَوْمُ الْأَرْبَعِينَ</div>
+        <div class="day-urdu">اربعینِ امام حسین علیہ السلام — چالیسویں دن کی زیارت۔ جابر بن عبداللہ انصاری پہلے زائر تھے۔ آج کرروڑوں مومنین پیادہ پا کربلا پہنچتے ہیں۔</div>
+      </li>
+    </ul>
+  </section>
 
-        window.addEventListener('DOMContentLoaded', initPlayer);
-    </script>
+  <div class="divider">۞ ۞ ۞</div>
+
+  <!-- ── SECTION 5: AMAAL ── -->
+  <section id="sec-amaal">
+    <h2>أَعْمَالُ الْمُحَرَّمِ</h2>
+    <div class="section-subtitle">محرم کے اعمال و مستحبات — فقہ شیعہ کی روشنی میں</div>
+
+    <div class="tts-bar">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="من أعمال شهر محرم المستحبة في الفقه الشيعي: أولاً إحياء ذكرى شهادة الإمام الحسين عليه السلام وإقامة مجالس العزاء. ثانياً زيارة الإمام الحسين عليه السلام ولو كانت من بُعد. ثالثاً البكاء والتباكي على مصائبه الكبرى. رابعاً صيام يوم التاسع والعاشر. خامساً إطعام المؤمنين وإقامة الموائد. سادساً قراءة زيارة عاشوراء. سابعاً لبس السواد حزناً على شهداء كربلاء.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="محرم الحرام کے مستحب اعمال: پہلا — امام حسین علیہ السلام کی شہادت کی یاد منانا اور مجالس عزا برپا کرنا۔ دوسرا — زیارت امام حسین علیہ السلام، چاہے دور سے ہی ہو۔ تیسرا — مصائب پر گریہ و بکاء کرنا۔ چوتھا — نو اور دس محرم کا روزہ۔ پانچواں — مومنین کو کھانا کھلانا۔ چھٹا — زیارت عاشورا پڑھنا۔ ساتویں — سیاہ لباس پہننا۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
+    </div>
+
+    <div class="amaal-grid">
+      <div class="amaal-card">
+        <div class="amaal-num">عمل ۱</div>
+        <div class="amaal-title-ar">إِحْيَاءُ الذِّكْرَى</div>
+        <div class="amaal-title-ur">مجالس عزا برپا کرنا — یادِ حسین علیہ السلام زندہ رکھنا سب سے بڑا عمل ہے</div>
+      </div>
+      <div class="amaal-card">
+        <div class="amaal-num">عمل ۲</div>
+        <div class="amaal-title-ar">زِيَارَةُ الْإِمَامِ</div>
+        <div class="amaal-title-ur">زیارت امام — کربلا حاضری یا دور سے زیارت پڑھنا</div>
+      </div>
+      <div class="amaal-card">
+        <div class="amaal-num">عمل ۳</div>
+        <div class="amaal-title-ar">الْبُكَاءُ وَالتَّبَاكِي</div>
+        <div class="amaal-title-ur">گریہ و بکاء — مصائبِ امام پر آنسو بہانا باعثِ اجر ہے</div>
+      </div>
+      <div class="amaal-card">
+        <div class="amaal-num">عمل ۴</div>
+        <div class="amaal-title-ar">صِيَامُ يَوْمِ عَاشُورَاء</div>
+        <div class="amaal-title-ur">نو اور دس محرم کا روزہ — بہت بڑی فضیلت</div>
+      </div>
+      <div class="amaal-card">
+        <div class="amaal-num">عمل ۵</div>
+        <div class="amaal-title-ar">إِطْعَامُ الْمُؤْمِنِينَ</div>
+        <div class="amaal-title-ur">نذر و نیاز — مومنین کو کھانا کھلانا، امام حسین کے نام پر</div>
+      </div>
+      <div class="amaal-card">
+        <div class="amaal-num">عمل ۶</div>
+        <div class="amaal-title-ar">قِرَاءَةُ زِيَارَةِ عَاشُورَاء</div>
+        <div class="amaal-title-ur">زیارت عاشورا — ہر روز یا کم از کم عاشورا کو پڑھنا</div>
+      </div>
+      <div class="amaal-card">
+        <div class="amaal-num">عمل ۷</div>
+        <div class="amaal-title-ar">لِبَاسُ الْحِدَادِ</div>
+        <div class="amaal-title-ur">سیاہ لباس — غم حسین میں سیاہ پہننا مستحب ہے</div>
+      </div>
+      <div class="amaal-card">
+        <div class="amaal-num">عمل ۸</div>
+        <div class="amaal-title-ar">قِرَاءَةُ الدُّعَاءِ</div>
+        <div class="amaal-title-ur">دعائے ندبہ، دعائے توسل اور زیارت وارثہ پڑھنا</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider">۞ ۞ ۞</div>
+
+  <!-- ── SECTION 6: ZIYARAT ── -->
+  <section id="sec-ziyarat">
+    <h2>زِيَارَةُ عَاشُورَاء</h2>
+    <div class="section-subtitle">زیارت عاشورا — منقول از امام محمد باقر علیہ السلام</div>
+
+    <div class="tts-bar">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="السلام عليك يا أبا عبدالله. السلام عليك يا ابن رسول الله. السلام عليك يا ابن أمير المؤمنين وابن سيد الوصيين. السلام عليك يا ابن فاطمة سيدة نساء العالمين. السلام عليك يا ثار الله وابن ثاره والوتر الموتور. أشهد أنك قد أقمت الصلاة وآتيت الزكاة وأمرت بالمعروف ونهيت عن المنكر وجاهدت في سبيل الله حتى أتاك اليقين.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="سلام ہو آپ پر اے ابو عبداللہ۔ سلام ہو آپ پر اے رسول اللہ کے فرزند۔ سلام ہو آپ پر اے امیر المومنین کے بیٹے اور اوصیاء کے سردار کے فرزند۔ سلام ہو آپ پر اے فاطمہ کے بیٹے جو جہانوں کی عورتوں کی سردار ہیں۔ سلام ہو آپ پر اے اللہ کے خون اور اس کے خون کے بیٹے۔ میں گواہی دیتا ہوں کہ آپ نے نماز قائم کی، زکوٰۃ دی، نیکی کا حکم دیا، برائی سے روکا اور اللہ کی راہ میں جہاد کیا یہاں تک کہ یقین آ گیا۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
+    </div>
+
+    <div class="arabic-block" style="font-size:1.5rem; line-height:2.8; text-align:center;">
+      اَلسَّلَامُ عَلَيْكَ يَا أَبَا عَبْدِاللهِ<br/>
+      اَلسَّلَامُ عَلَيْكَ يَا ابْنَ رَسُولِ اللهِ<br/>
+      اَلسَّلَامُ عَلَيْكَ يَا ابْنَ أَمِيرِ الْمُؤْمِنِينَ وَابْنَ سَيِّدِ الْوَصِيِّينَ<br/>
+      اَلسَّلَامُ عَلَيْكَ يَا ابْنَ فَاطِمَةَ سَيِّدَةِ نِسَاءِ الْعَالَمِينَ<br/>
+      اَلسَّلَامُ عَلَيْكَ يَا ثَارَ اللهِ وَابْنَ ثَارِهِ وَالْوَتْرَ الْمَوْتُورَ<br/>
+      أَشْهَدُ أَنَّكَ قَدْ أَقَمْتَ الصَّلَاةَ وَآتَيْتَ الزَّكَاةَ وَأَمَرْتَ بِالْمَعْرُوفِ وَنَهَيْتَ عَنِ الْمُنْكَرِ<br/>
+      وَجَاهَدْتَ فِي سَبِيلِ اللهِ حَتَّى أَتَاكَ الْيَقِينُ
+    </div>
+    <div class="urdu-block" style="text-align:center; font-size:1.1rem;">
+      سلام ہو آپ پر اے ابو عبداللہ<br/>
+      سلام ہو آپ پر اے رسول اللہ صلی اللہ علیہ وآلہ وسلم کے فرزند<br/>
+      سلام ہو آپ پر اے امیر المومنین کے بیٹے اور اوصیاء کے سردار کے فرزند<br/>
+      سلام ہو آپ پر اے فاطمہ سلام اللہ علیہا کے بیٹے جو جہانوں کی عورتوں کی سردار ہیں<br/>
+      سلام ہو آپ پر اے اللہ کے خون، اس کے خون کے بیٹے اور وہ جن کا بدلہ لینا باقی ہے<br/>
+      میں گواہی دیتا ہوں کہ آپ نے نماز قائم کی، زکوٰۃ دی، نیکی کا حکم دیا اور برائی سے روکا<br/>
+      اور اللہ کی راہ میں جہاد کیا یہاں تک کہ آپ کو یقین آ گیا
+    </div>
+  </section>
+
+  <div class="divider">۞ ۞ ۞</div>
+
+  <!-- ── SECTION 7: DUAS ── -->
+  <section id="sec-duas">
+    <h2 class="urdu-heading">محرم کی دعائیں</h2>
+    <div class="section-subtitle">منتخب دعائیں جو محرم میں پڑھی جاتی ہیں</div>
+
+    <div class="tts-bar">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="اللهم إني أسألك باسمك الأعظم وبجاه الحسين الشهيد المظلوم أن تغفر لي ذنوبي وتفرج كربتي وتقضي حاجتي. اللهم العن أول ظالم ظلم حق محمد وآل محمد وآخر تابع له على ذلك. اللهم إني أتقرب إليك في هذا اليوم وفي موقفي هذا وأيام حياتي بالبراءة ممن ظلمهم.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="اے اللہ! میں تجھ سے تیرے عظیم ترین نام کے وسیلے سے اور حسین شہید مظلوم کی شان کے واسطے سے سوال کرتا ہوں کہ میرے گناہ معاف فرما، میری مصیبت دور فرما اور میری حاجت پوری فرما۔ اے اللہ! پہلے ظالم پر لعنت کر جس نے محمد وآل محمد کا حق غصب کیا اور ان تمام پر جنہوں نے اس کی پیروی کی۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
+    </div>
+
+    <div class="dua-block">
+      <div class="dua-arabic">
+        اَللّٰهُمَّ إِنِّي أَسْأَلُكَ بِاسْمِكَ الْأَعْظَمِ وَبِجَاهِ الْحُسَيْنِ الشَّهِيدِ الْمَظْلُومِ<br/>
+        أَنْ تَغْفِرَ لِي ذُنُوبِي وَتَفْرُجَ كُرْبَتِي وَتَقْضِيَ حَاجَتِي
+      </div>
+      <div class="dua-urdu">
+        اے اللہ! میں تجھ سے تیرے عظیم ترین نام کے وسیلے سے<br/>
+        اور حسین شہید مظلوم علیہ السلام کی شان کے واسطے سے سوال کرتا ہوں<br/>
+        کہ میرے گناہ معاف فرما، میری تکلیف دور فرما اور میری حاجت پوری فرما
+      </div>
+    </div>
+
+    <div class="dua-block">
+      <div class="dua-arabic">
+        اَللّٰهُمَّ الْعَنِ الْأَوَّلَ مَنْ ظَلَمَ حَقَّ مُحَمَّدٍ وَآلِ مُحَمَّدٍ<br/>
+        وَآخِرَ تَابِعٍ لَهُ عَلَى ذَلِكَ
+      </div>
+      <div class="dua-urdu">
+        اے اللہ! پہلے اس شخص پر لعنت کر جس نے محمد وآل محمد کا حق غصب کیا<br/>
+        اور آخری اس پر بھی جس نے اس کی اتباع کی
+      </div>
+    </div>
+
+    <div class="hadith-box">
+      <div class="hadith-label">📿 دعائے توسل — مشلسل روایت</div>
+      <p>«اَللّٰهُمَّ إِنِّي أَتَوَسَّلُ إِلَيْكَ بِنَبِيِّكَ نَبِيِّ الرَّحْمَةِ مُحَمَّدٍ ﷺ وَبِعَلِيٍّ وَفَاطِمَةَ وَالْحَسَنِ وَالْحُسَيْنِ وَعَلِيٍّ وَمُحَمَّدٍ وَجَعْفَرٍ وَمُوسَى وَعَلِيٍّ وَمُحَمَّدٍ وَعَلِيٍّ وَالْحَسَنِ وَالْحُجَّةِ الْقَائِمِ»</p>
+      <div class="hadith-ur">اے اللہ! میں تیری بارگاہ میں تیرے نبیِ رحمت محمد مصطفیٰ ﷺ اور علی، فاطمہ، حسن، حسین، علی، محمد، جعفر، موسیٰ، علی، محمد، علی، حسن اور حجۃ القائم علیہم السلام کا وسیلہ لیتا ہوں۔</div>
+    </div>
+  </section>
+
+  <div class="divider">۞ ۞ ۞</div>
+
+  <!-- ── SECTION 8: AQEEDAH ── -->
+  <section id="sec-aqeedah">
+    <h2>الْعَقِيدَةُ الشِّيعِيَّةُ فِي الْمُحَرَّمِ</h2>
+    <div class="section-subtitle">شیعہ عقیدے میں محرم کا مقام</div>
+
+    <div class="tts-bar">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="يرى الشيعة الإمامية أن البكاء على الإمام الحسين عليه السلام من أفضل القربات، وأن إقامة مجالس العزاء إحياء للدين وحفاظ على شعائر الله. ويعتقدون أن الإمام الحسين لم يُقتل فحسب، بل قدّم نفسه فداء لإحياء الإسلام بعد أن أراد يزيد أن يُلغي أحكام الشريعة. وتقوم العزاداری على ثلاثة أركان: الاعتقاد بعصمة الأئمة، والتبري من أعداء أهل البيت، والتولي لأئمة الهدى.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="شیعہ امامیہ کا عقیدہ ہے کہ امام حسین علیہ السلام پر گریہ کرنا بہترین عبادات میں سے ہے اور مجالس عزا برپا کرنا دین کو زندہ رکھنا اور شعائر اللہ کی حفاظت کرنا ہے۔ شیعوں کا یقین ہے کہ امام حسین علیہ السلام محض قتل نہیں ہوئے بلکہ انہوں نے اسلام کو دوبارہ زندہ کرنے کے لیے اپنی جان قربان کی۔ عزاداری تین ستونوں پر قائم ہے: ائمہ کی عصمت پر ایمان، اہل بیت کے دشمنوں سے برأت، اور ائمہ ہدیٰ سے محبت و ولایت۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
+    </div>
+
+    <div class="arabic-block">
+      يَرَى الشِّيعَةُ الْإِمَامِيَّةُ أَنَّ الْبُكَاءَ عَلَى الْإِمَامِ الْحُسَيْنِ عَلَيْهِ السَّلَامُ مِنْ أَفْضَلِ الْقُرُبَاتِ إِلَى اللهِ تَعَالَى، وَأَنَّ إِقَامَةَ مَجَالِسِ الْعَزَاءِ إِحْيَاءٌ لِلدِّينِ وَحِفَاظٌ عَلَى شَعَائِرِ اللهِ الْعَظِيمَةِ. وَيَعْتَقِدُونَ أَنَّ الْإِمَامَ الْحُسَيْنَ لَمْ يُقْتَلْ فَحَسْبُ، بَلْ قَدَّمَ نَفْسَهُ فِدَاءً لِإِحْيَاءِ الْإِسْلَامِ الَّذِي أَرَادَ يَزِيدُ الطَّاغِيَةُ أَنْ يُلْغِيَ أَحْكَامَهُ وَيُبَدِّلَ شَرِيعَتَهُ.
+    </div>
+    <div class="urdu-block">
+      شیعہ امامیہ کا مضبوط عقیدہ ہے کہ امام حسین علیہ السلام پر گریہ کرنا اور ان کی یاد منانا اللہ تعالیٰ کی بارگاہ میں بہترین عبادات میں سے ہے۔ مجالس عزا برپا کرنا شعائر اللہ کی تعظیم ہے اور دین اسلام کو زندہ رکھنے کا ذریعہ ہے۔ امام حسین علیہ السلام نے یزید کی بیعت اس لیے نہیں کی کیونکہ یزید نے اسلام کے احکام کو مٹانا چاہا تھا۔ امام علیہ السلام کی شہادت نے اسلام کو قیامت تک کے لیے زندہ کر دیا۔ عزاداری ولایت کا اظہار ہے — تولّیٰ اور تبرّیٰ اس کے دو ستون ہیں۔
+    </div>
+
+    <div class="hadith-box">
+      <div class="hadith-label">📜 امام جعفر صادق علیہ السلام</div>
+      <p>«مَنْ بَكَى لِقَتْلِ الْحُسَيْنِ وَاسْتَبْكَى فَلَيْسَ لَهُ ذَنْبٌ إِلَّا غَفَرَ اللهُ لَهُ»</p>
+      <div class="hadith-ur">جو شخص حسین کی شہادت پر روئے اور رُلائے، اس کا کوئی گناہ نہیں رہے گا مگر اللہ اسے معاف فرما دے گا۔</div>
+      <div class="hadith-source">— امام جعفر صادق علیہ السلام | کامل الزیارات، ابن قولویہ</div>
+    </div>
+  </section>
+
+  <div class="divider">۞ ۞ ۞</div>
+
+  <!-- ── SECTION 9: NAWHA ── -->
+  <section id="sec-nawha">
+    <h2 class="urdu-heading">نوحۂ امام حسین علیہ السلام</h2>
+    <div class="section-subtitle">کلاسیکی نوحہ — اردو و عربی</div>
+
+    <div class="tts-bar">
+      <label>🔊 Read Aloud:</label>
+      <button class="tts-btn" data-lang="ar" data-text="يا حسين يا مظلوم. يا حسين يا شهيد. لبيك يا حسين، لبيك يا حسين. نحن فداؤك يا ابن الزهراء. يا من سقى الإسلام بدمائه الطاهرة. يا من روّى شجرة الدين بتضحيته الكبرى.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        عربی سنیں
+      </button>
+      <button class="tts-btn" data-lang="ur" data-text="اے حسین اے مظلوم۔ اے حسین اے شہید۔ لبیک یا حسین، لبیک یا حسین۔ ہم تجھ پر قربان اے بیٹے زہرا۔ اے وہ جس نے اسلام کو اپنے پاک خون سے سینچا۔ اے وہ جس نے اپنی عظیم قربانی سے دین کے درخت کو سیراب کیا۔ تیری یاد میں آنکھیں ہمیشہ نم رہیں گی اے ابو عبداللہ۔">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        اردو سنیں
+      </button>
+      <div class="tts-speed">
+        <label>رفتار:</label>
+        <input type="range" min="0.5" max="1.5" step="0.1" value="0.85" class="speed-slider" />
+        <span class="speed-val">0.85×</span>
+      </div>
+    </div>
+
+    <div class="arabic-block" style="text-align:center; font-size:1.6rem; line-height:3;">
+      يَا حُسَيْنُ يَا مَظْلُومُ<br/>
+      يَا حُسَيْنُ يَا شَهِيدُ<br/>
+      لَبَّيْكَ يَا حُسَيْنُ — لَبَّيْكَ يَا حُسَيْنُ<br/>
+      نَحْنُ فِدَاؤُكَ يَا ابْنَ الزَّهْرَاءِ<br/>
+      يَا مَنْ سَقَى الْإِسْلَامَ بِدِمَائِهِ الطَّاهِرَةِ
+    </div>
+
+    <div class="urdu-block" style="text-align:center; font-size:1.2rem; line-height:3;">
+      اے حسین اے مظلوم<br/>
+      اے حسین اے شہید<br/>
+      لبیک یا حسین — لبیک یا حسین<br/>
+      ہم تجھ پر قربان اے بیٹے زہرا<br/>
+      اے وہ جس نے اسلام کو اپنے پاک خون سے سینچا<br/>
+      تیری یاد میں آنکھیں ہمیشہ نم رہیں گی اے ابو عبداللہ
+    </div>
+
+    <div class="maqtal-banner" style="margin-top:2rem;">
+      <div class="banner-arabic">كُلُّ يَوْمٍ عَاشُورَاء وَكُلُّ أَرْضٍ كَرْبَلَاء</div>
+      <div class="banner-urdu">ہر دن عاشورا ہے اور ہر زمین کربلا ہے — امام جعفر صادق علیہ السلام</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ GLOBAL TTS CONTROLS ══ -->
+<div id="global-tts">
+  <span class="g-label">TTS</span>
+  <button id="g-stop" title="Stop">⏹</button>
+  <button id="g-pause" title="Pause/Resume">⏸</button>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span class="footer-arabic">اَللّٰهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ</span>
+  Compiled in the tradition of Ahl al-Bayt (علیہم السلام) · Shia Islamic Reference · محرم الحرام<br/>
+  All Arabic text follows classical Islamic scholarly tradition · اردو متن فقہ شیعہ امامیہ کے مطابق ہے
+</footer>
+
+<script>
+  /* ── TTS ENGINE ── */
+  let currentUtterance = null;
+  let isPaused = false;
+
+  function stopTTS() {
+    window.speechSynthesis.cancel();
+    currentUtterance = null;
+    isPaused = false;
+    document.querySelectorAll('.tts-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  function speakText(text, lang, btn) {
+    stopTTS();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang === 'ar' ? 'ar-SA' : 'ur-PK';
+    const speedSlider = btn.closest('.tts-bar').querySelector('.speed-slider');
+    utter.rate = parseFloat(speedSlider ? speedSlider.value : 0.85);
+    utter.pitch = 1;
+
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(v => v.lang.startsWith(lang === 'ar' ? 'ar' : 'ur'));
+    if (preferred) utter.voice = preferred;
+
+    utter.onend = () => {
+      btn.classList.remove('active');
+      currentUtterance = null;
+      isPaused = false;
+    };
+    utter.onerror = () => {
+      btn.classList.remove('active');
+      currentUtterance = null;
+    };
+
+    currentUtterance = utter;
+    btn.classList.add('active');
+    window.speechSynthesis.speak(utter);
+  }
+
+  /* Ensure voices are loaded */
+  window.speechSynthesis.onvoiceschanged = () => {};
+
+  /* Button click handlers */
+  document.querySelectorAll('.tts-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('active')) {
+        stopTTS();
+        return;
+      }
+      const lang = btn.dataset.lang;
+      const text = btn.dataset.text;
+      speakText(text, lang, btn);
+    });
+  });
+
+  /* Speed sliders */
+  document.querySelectorAll('.speed-slider').forEach(slider => {
+    const valEl = slider.closest('.tts-speed').querySelector('.speed-val');
+    slider.addEventListener('input', () => {
+      valEl.textContent = parseFloat(slider.value).toFixed(2) + '×';
+      if (currentUtterance) currentUtterance.rate = parseFloat(slider.value);
+    });
+  });
+
+  /* Global controls */
+  document.getElementById('g-stop').addEventListener('click', stopTTS);
+  document.getElementById('g-pause').addEventListener('click', () => {
+    if (!currentUtterance) return;
+    if (isPaused) {
+      window.speechSynthesis.resume();
+      isPaused = false;
+      document.getElementById('g-pause').textContent = '⏸';
+    } else {
+      window.speechSynthesis.pause();
+      isPaused = true;
+      document.getElementById('g-pause').textContent = '▶';
+    }
+  });
+
+  /* Keep speech synthesis alive (Chrome workaround) */
+  setInterval(() => {
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.pause();
+      window.speechSynthesis.resume();
+    }
+  }, 10000);
+</script>
 </body>
 </html>
